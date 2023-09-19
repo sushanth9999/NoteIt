@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth.js';
 import notesRoutes from './routes/notes.js';
@@ -9,6 +10,8 @@ app.get('/', (req, res) => {
     res.send('Hi! It is working');
 })
 
+app.use(bodyParser.json({ limit: "30mb", extended: true}));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 app.use('/auth', authRoutes);
 app.use('/notes', notesRoutes)
 
