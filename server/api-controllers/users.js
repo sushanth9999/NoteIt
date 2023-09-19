@@ -38,3 +38,34 @@ export const createUser = async (req, res) => {
         res.status(409).json({message: error.message});
     }
 }
+
+export const loginUser = async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
+    }
+
+    const {email, password} = req.body;
+
+    try {
+        let currUser = await User.findOne({email});
+        if(!currUser) {
+            return res.status(400).json({error: "Invalid email or password"});
+        }
+
+        if(!(await bcrypt.compare(password, currUser.password))) {
+            return res.status(400).json({error: "Invalid email or password"});
+        }
+
+        const data = {
+            currUser:{
+                id: currUser.id
+            }
+        }
+        const token = jwt.sign(data, jwt_secret_key);
+        res.status(201).json({token});
+    } catch (error) {
+        res.status(409).json({message: error.message});
+    }
+}
+
