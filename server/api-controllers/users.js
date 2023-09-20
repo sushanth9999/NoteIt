@@ -69,3 +69,14 @@ export const loginUser = async (req, res) => {
     }
 }
 
+export const getUserInfo = async (req, res) => {
+    try {
+        const user_id = req.user.id;
+        const currUser = await User.findById(user_id).select("-password");
+        res.send(currUser);
+    } catch (error) {
+        res.status(409).json({message: error.message});
+    }
+}
+
+
