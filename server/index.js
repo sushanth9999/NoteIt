@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth.js';
 import notesRoutes from './routes/notes.js';
+import cors from 'cors';
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.get('/', (req, res) => {
     res.send('Hi! It is working');
 })
 
+app.use(cors());
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 app.use('/auth', authRoutes);
