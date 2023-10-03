@@ -44,11 +44,7 @@ const Home = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      title: data.get('title'),
-      content: data.get('content'),
-    });
-    addNote(note);
+    addNote({title: data.get('title'), content: data.get('content')});
   };
 
   const handleChange = (event) => {
