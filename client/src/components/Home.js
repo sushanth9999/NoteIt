@@ -20,6 +20,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Navbar from './Navbar';
 
 const defaultTheme = createTheme();
 
@@ -67,6 +68,7 @@ const Home = () => {
 
   return (
     <>
+      <Navbar />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle textAlign={'center'} variant='h5'>Edit your note</DialogTitle>
         <DialogContent>

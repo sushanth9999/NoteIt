@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -22,6 +23,8 @@ const Login = () => {
     const handleChangeCreds = (event) => {
         setcreds({ ...creds, [event.target.name]: event.target.value })
     };
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -35,6 +38,8 @@ const Login = () => {
         const loginStatusDetails = await res.json();
         if(!loginStatusDetails.loginStatus)
         alert(loginStatusDetails.error);
+        localStorage.setItem('token', loginStatusDetails.token);
+        navigate('/')
     };
 
     return (
