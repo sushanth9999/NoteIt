@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
 import NoteState from "./context/notes/noteState";
+import Login from "./components/Login";
 const App = () => {
     return (
         <NoteState>
@@ -16,6 +17,7 @@ const App = () => {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/about" element={<About />} />
+                    <Route exact path="/login" element={<Login />} />
                 </Routes>
             </Router>
         </NoteState>

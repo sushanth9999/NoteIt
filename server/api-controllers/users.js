@@ -40,6 +40,7 @@ export const createUser = async (req, res) => {
 }
 
 export const loginUser = async (req, res) => {
+    let loginStatus = false;
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()});
@@ -50,11 +51,11 @@ export const loginUser = async (req, res) => {
     try {
         let currUser = await User.findOne({email});
         if(!currUser) {
-            return res.status(400).json({error: "Invalid email or password"});
+            return res.status(400).json({loginStatus: loginStatus, error: "Invalid email or password"});
         }
 
         if(!(await bcrypt.compare(password, currUser.password))) {
-            return res.status(400).json({error: "Invalid email or password"});
+            return res.status(400).json({loginStatus: loginStatus, error: "Invalid email or password"});
         }
 
         const data = {
@@ -63,7 +64,8 @@ export const loginUser = async (req, res) => {
             }
         }
         const token = jwt.sign(data, jwt_secret_key);
-        res.status(201).json({token});
+        loginStatus = true;
+        res.status(201).json({loginStatus, token});
     } catch (error) {
         res.status(409).json({message: error.message});
     }
