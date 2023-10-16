@@ -6,11 +6,14 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import noteContext from '../context/notes/noteContext';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
   
 
 const Note = (props) => {
     const {note, handleEdit} = props;
     const { deleteNote } = useContext(noteContext);
+    dayjs.extend(relativeTime);
     return (
         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
           <CardContent>
@@ -21,7 +24,7 @@ const Note = (props) => {
                 {note.content}
             </Typography>
             <Typography variant='subtitle1' color="text.secondary">
-              {note.createdAt}
+              {dayjs(note.createdAt).fromNow()}
             </Typography>
           </CardContent>
           <CardActions>
