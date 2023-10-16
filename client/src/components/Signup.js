@@ -1,23 +1,21 @@
+import AddIcon from '@mui/icons-material/Add';
 import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
 
+const Signup = () => {
     const host = "http://localhost:5000";
 
-    const [creds, setcreds] = useState({ email: "", password: "" });
+    const [creds, setcreds] = useState({ name: "", email: "", password: "" });
 
     const handleChangeCreds = (event) => {
         setcreds({ ...creds, [event.target.name]: event.target.value })
@@ -27,20 +25,18 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const res = await fetch(host + "/auth/loginuser", {
+        const res = await fetch(host + "/auth/createuser", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(creds)
         })
-        const loginStatusDetails = await res.json();
-        if (!loginStatusDetails.loginStatus)
-            alert(loginStatusDetails.error);
-        else {
-            localStorage.setItem('token', loginStatusDetails.token);
-            navigate('/');
-        }
+        const signUpDetails = await res.json();
+        console.log(signUpDetails.token);
+        localStorage.setItem('token', signUpDetails.token);
+        alert("Please Sign In again with new credentials");
+        navigate('/login');
     };
 
     return (
@@ -75,12 +71,21 @@ const Login = () => {
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                    < AddIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Sign Up
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="name"
+                        label="Name"
+                        name="name"
+                        onChange={handleChangeCreds}
+                    />
                     <TextField
                         margin="normal"
                         required
@@ -106,17 +111,12 @@ const Login = () => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
+                        Sign Up
                     </Button>
-                    <Grid container justifyContent={'center'}>
-                        <Link to="/signup" variant="body2">
-                            {"Don't have an account? Sign Up"}
-                        </Link>
-                    </Grid>
                 </Box>
             </Box>
         </Container>
     );
 }
 
-export default Login
+export default Signup
