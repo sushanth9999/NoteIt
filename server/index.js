@@ -19,7 +19,7 @@ app.use('/notes', notesRoutes)
 
 
 //connecting database
-const mongo_URL = "mongodb+srv://sushanthjanumpally:sushanth@cluster0.z1bqlhz.mongodb.net/?retryWrites=true&w=majority";
+const mongo_URL = "mongodb";
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(mongo_URL)
